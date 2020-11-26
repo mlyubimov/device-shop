@@ -70,7 +70,7 @@
 						<h3 class="promo__content-title font-gilroy-eb">Порхает как бабочка, жалит как пчела!</h3>
 						<p class="promo__content-text font-sans-300">Этот обычный, на первый взгляд, квадрокоптер оснащен мощным лазером, замаскированным под стандартную камеру.</p>
 						<div class="promo__link-container">
-							<router-link class="btn promo__btn font-gilroy-eb" to="/catalog/quadcopters/DJI-Mavic-2-Pro" aria-label="Открыть страницу с подробностями о данном квадрокоптере">Подробнее</router-link>
+							<router-link class="btn promo__btn font-gilroy-eb" to="/catalog/quadcopters/dji-mavic-2-pro" aria-label="Открыть страницу с подробностями о данном квадрокоптере">Подробнее</router-link>
 						</div>
 						<table class="promo__table table__quadrocopter">
 							<thead class="promo__table-head">
@@ -242,13 +242,14 @@
 				<a class="btn about-contacts__btn font-gilroy-eb" href="#"
 					aria-label="Открыть страницу «О нас»">Подробнее о нас</a>
 			</section>
-			<section class="about-contacts__section contacts">
+			<section class="about-contacts__section contacts" @keyup.esc="closePopup">
 				<h2 class="about-contacts__title font-gilroy-eb">Контакты</h2>
 				<p class="about-contacts__text font-sans-300">Вы можете забрать товар сами, заехав в наш офис. Заодно, вы сможете проверить работоспособность покупки. Всякое бывает.</p>
 				<a @click.prevent="openMap" class="link-map contacts__map" href="popup__map.html" aria-label="Открыть карту">
 					<img class="link-map__img" src="@/assets/img/map.png" width="560" height="222" alt="Карта нашего местоположения">
 				</a>
-				<section :class="['popup about-contacts__popup popup__map', classMapShow]">
+				<section :class="['popup about-contacts__popup popup__map', this.mapShow === false ? 'popup--none' : '']">
+					<div class="popup__overlay" @click="closeMap"></div>
 					<h2 class="visually-hidden">Расположение нашего офиса</h2>
 					<div class="popup-container">
 						<iframe
@@ -263,7 +264,8 @@
 				</section>
 				<a @click.prevent="openWriteUs" class="btn about-contacts__btn contacts__btn font-gilroy-eb contacts__link"
 					href="popup__write-us.html" aria-label="Открыть форму обратной связи">Напишите нам</a>
-				<section :class="['popup about-contacts__popup popup__write-us', classWriteUsShow]">
+				<section :class="['popup about-contacts__popup popup__write-us', this.writeUsShow === false ? 'popup--none' : '']">
+					<div class="popup__overlay" @click="closeWriteUs"></div>
 					<h2 class="visually-hidden">Форма обратной связи</h2>
 					<form class="write-us-form popup-container" action="https://echo.htmlacademy.ru" method="post">
 						<div class="write-us__user-info-container">
@@ -306,59 +308,9 @@ export default {
 		}
 	},
 
-	computed: {
-		classMapShow () {
-			return {
-				'popup--none': this.mapShow === false
-			}
-		},
-		classWriteUsShow () {
-			return {
-				'popup--none': this.writeUsShow === false
-			}
-		}
-	},
-
-	mounted () {
-		if (this.$route.name === 'Home') {
-			document.addEventListener('click', e => {
-				const target = e.target
-				if (document.querySelector('.popup__map').classList.contains('popup--none') !== true) {
-					const popupMapContainer = document.querySelector('.popup__map .popup-container')
-					const linkMap = document.querySelector('.link-map')
-					const content = target === popupMapContainer || popupMapContainer.contains(target)
-					const link = target === linkMap
-					if (!content && !link) {
-						this.closeMap()
-					}
-				}
-				if (document.querySelector('.popup__write-us').classList.contains('popup--none') !== true) {
-					const popupFeedbackForm = document.querySelector('.popup__write-us .write-us-form')
-					const popupFeedbackOpen = document.querySelector('.contacts__link')
-					const content = target === popupFeedbackForm || popupFeedbackForm.contains(target)
-					const link = target === popupFeedbackOpen
-					if (!content && !link) {
-						this.closeWriteUs()
-					}
-				}
-			})
-			window.addEventListener('keydown', e => {
-				if (e.key === 'Escape') {
-					if (document.querySelector('.popup__map').style.display !== 'none') {
-						this.closeMap()
-					}
-					if (document.querySelector('.popup__map').style.display !== 'none') {
-						this.closeWriteUs()
-					}
-				}
-			})
-		}
-	},
-
 	methods: {
 		openMap () {
 			document.body.classList.add('hidden-overflow')
-			console.log(this)
 			this.mapShow = true
 		},
 
@@ -375,6 +327,11 @@ export default {
 		closeWriteUs () {
 			document.body.classList.remove('hidden-overflow')
 			this.writeUsShow = false
+		},
+
+		closePopup () {
+			this.closeMap()
+			this.closeWriteUs()
 		}
 	}
 }

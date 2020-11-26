@@ -1,0 +1,27 @@
+@import 'colors';
+@import 'fonts';
+@import 'keyframes';
+
+@import "first";
+@import "preloader";
+@import "header";
+@import "footer";
+
+// index
+@import "index/slider";
+@import "index/popularity";
+@import "index/services";
+@import "index/partners";
+@import "index/about-contacts";
+@import "index/popup";
+
+// catalog
+@import "catalog/catalog";
+@import "catalog/breadcrumbs";
+@import "catalog/sorting";
+@import "catalog/filter";
+@import "catalog/product";
+
+// product
+@import 'product/product-card';
+@import 'product/tabs';

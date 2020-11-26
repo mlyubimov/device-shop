@@ -194,28 +194,5 @@ export default {
 </script>
 
 <style lang="scss">
-	@import 'assets/css/colors.scss';
-	@import 'assets/css/fonts.scss';
-	@import 'assets/css/keyframes';
-
-	@import 'assets/css/first.scss';
-	@import 'assets/css/preloader.scss';
-	@import 'assets/css/header.scss';
-	@import 'assets/css/footer.scss';
-
-	@import "assets/css/index/slider";
-	@import "assets/css/index/popularity";
-	@import "assets/css/index/services";
-	@import "assets/css/index/partners";
-	@import "assets/css/index/about-contacts";
-	@import "assets/css/index/popup";
-
-	@import 'assets/css/catalog/catalog.scss';
-	@import 'assets/css/catalog/breadcrumbs';
-	@import 'assets/css/catalog/sorting';
-	@import 'assets/css/catalog/filter';
-	@import 'assets/css/catalog/product';
-
-	@import 'assets/css/product/product-card';
-	@import 'assets/css/product/tabs'
+	@import 'assets/scss/style.scss';
 </style>
