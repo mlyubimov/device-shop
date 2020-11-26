@@ -91,7 +91,7 @@
 				<div class="information" v-show="this.showInfo === 'feedback'">
 					<h2 class="information__title font-gilroy-eb">Отзывы</h2>
 					<ul class="feedback">
-						<li class="feedback__item" v-for="(item, index) in this.product.feedback.reverse()" :key="index">
+						<li class="feedback__item" v-for="(item, index) in this.product.feedback" :key="index">
 							<p class="feedback__date font-sans-400" v-if="new Date((new Date() - new Date(item.date))).getUTCFullYear() - 1970 > 0">Больше года назад</p>
 
 							<p class="feedback__date font-sans-400" v-else-if="new Date((new Date() - new Date(item.date))).getUTCMonth() > 0">
@@ -219,6 +219,10 @@ export default {
 		}
 		this.product.price = String(this.product.price).replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, '$1' + ' ')
 
+		if (this.product.feedback) {
+			this.product.feedback = this.product.feedback.reverse()
+		}
+
 		window.addEventListener('scroll', this.scrollFunction)
 
 		import(`@/assets/pages/${this.product.brand}/${this.product.name.replace(/ /g, '-')}/description.vue`).then(response => {
@@ -253,7 +257,7 @@ export default {
 			for (let i = 0; i < arr.length; i++) {
 				arr[i] = arr[i][0].toUpperCase() + arr[i].slice(1)
 			}
-			console.log(arr)
+			// console.log(arr)
 			return this.$store.state.catalog[arr.join('')].find(item => item.id === this.$route.path.split('/')[3])
 		},
 		pageName () {
